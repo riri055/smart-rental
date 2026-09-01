@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mustard: #F7C83E;
+  --color-mustard-hover: #E5B728;
+  --color-mustard-light: #FEF6DC;
+  --color-cream: #F7F2E6;
+  --color-cream-dark: #EDE7D8;
+  --color-surface: #FFFDF7;
+  --color-charcoal: #242424;
+  --color-charcoal-light: #383838;
+  --color-charcoal-muted: #55534E;
+  --color-muted: #78756E;
+  --color-border-dark: #242424;
+  --color-border-light: rgba(36, 36, 36, 0.14);
+  --color-status-green: #2E7D32;
+  --color-status-green-bg: #EBF5ED;
+  --color-status-orange: #D97706;
+  --color-status-orange-bg: #FEF3C7;
+  --color-status-red: #C62828;
+  --color-status-red-bg: #FEE2E2;
+  --color-status-blue: #1565C0;
+  --color-status-blue-bg: #E3F2FD;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #F7F2E6;
+  color: #242424;
+  overflow-x: hidden;
+}
+
+/* Custom industrial scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F2E6;
+}
+::-webkit-scrollbar-thumb {
+  background: #D5CEBD;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #242424;
+}
+
+/* Clean map styles */
+.leaflet-container {
+  background-color: #F7F2E6 !important;
+  font-family: var(--font-sans) !important;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+/* Leaflet popup styling */
+.custom-leaflet-popup .leaflet-popup-content-wrapper {
+  background: #FFFDF7 !important;
+  color: #242424 !important;
+  border: 1px solid #242424 !important;
+  border-radius: 6px !important;
+  box-shadow: 3px 3px 0px rgba(36, 36, 36, 0.2) !important;
+  padding: 0 !important;
+}
+
+.custom-leaflet-popup .leaflet-popup-content {
+  margin: 10px 14px !important;
+  line-height: 1.4 !important;
+}
+
+.custom-leaflet-popup .leaflet-popup-tip {
+  background: #FFFDF7 !important;
+  border: 1px solid #242424 !important;
+}
