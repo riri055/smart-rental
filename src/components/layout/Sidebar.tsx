@@ -9,6 +9,7 @@ import {
   FileText,
   AlertOctagon,
   Sparkles,
+  QrCode,
 } from 'lucide-react';
 
 interface NavItem {
@@ -50,6 +51,11 @@ export const Sidebar: React.FC = () => {
       screen: 'check-in-out',
       label: 'Check In / Out',
       icon: <ArrowLeftRight className="w-4 h-4" />,
+    },
+    {
+      screen: 'qr-scan',
+      label: 'Scan QR',
+      icon: <QrCode className="w-4 h-4" />,
     },
     {
       screen: 'usage-logs',

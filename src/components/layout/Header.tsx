@@ -8,6 +8,7 @@ import {
   Building2,
   ChevronDown,
   Check,
+  QrCode,
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -197,6 +198,14 @@ export const Header: React.FC = () => {
       </div>
 
       <div className="flex items-center gap-3">
+        <button
+          onClick={() => navigateTo('qr-scan')}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#242424] hover:bg-[#383838] text-[#FFFDF7] text-xs font-semibold shadow-[2px_2px_0px_rgba(36,36,36,0.2)] transition-all"
+        >
+          <QrCode className="w-3.5 h-3.5 text-[#F7C83E]" />
+          <span>Scan QR</span>
+        </button>
+
         <button
           onClick={() => navigateTo('check-in-out')}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#242424] hover:bg-[#383838] text-[#FFFDF7] text-xs font-semibold shadow-[2px_2px_0px_rgba(36,36,36,0.2)] transition-all"

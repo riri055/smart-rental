@@ -21,6 +21,7 @@ export type ScreenType =
   | 'assets'
   | 'asset-details'
   | 'check-in-out'
+  | 'qr-scan'
   | 'usage-logs'
   | 'alerts'
   | 'ai-intelligence';
