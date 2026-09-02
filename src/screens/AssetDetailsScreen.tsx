@@ -136,7 +136,7 @@ export const AssetDetailsScreen: React.FC = () => {
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-bold font-mono tracking-tight text-[#242424]">
-              ASSET TELEMETRY & DIAGNOSTICS
+              ASSET PROFILE
             </h1>
             <select
               value={assetId}
@@ -329,7 +329,7 @@ export const AssetDetailsScreen: React.FC = () => {
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#242424]/10">
                     <span className="text-[#78756E] flex items-center gap-1">
-                      <Navigation className="w-3.5 h-3.5" /> Last GPS:
+                      <Navigation className="w-3.5 h-3.5" /> Last Location:
                     </span>
                     <span className="font-mono text-[11px] text-[#242424]">
                       {latest ? `${latest.latitude.toFixed(4)}, ${latest.longitude.toFixed(4)}` : '—'}

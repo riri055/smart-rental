@@ -185,7 +185,7 @@ export const QrScanScreen: React.FC = () => {
       <div className="border-b border-[#242424]/15 pb-3">
         <div className="flex items-center gap-2">
           <h1 className="text-xl font-bold font-mono tracking-tight text-[#242424]">
-            QR ASSET IDENTIFICATION
+            SCAN ASSET QR
           </h1>
           <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#F7C83E] text-[#242424] border border-[#242424]">
             Scan or Enter ID
@@ -201,7 +201,7 @@ export const QrScanScreen: React.FC = () => {
         <div className="lg:col-span-5 space-y-5">
           <div className="rounded-lg border border-[#242424]/20 bg-[#FFFDF7] p-5 shadow-sm">
             <h3 className="text-xs font-bold font-mono uppercase tracking-wider text-[#242424] border-b border-[#242424]/10 pb-2 mb-4">
-              Manual Entry
+              Manual Equipment ID
             </h3>
             <form onSubmit={handleManualFind} className="space-y-3">
               <label className="block text-xs font-semibold text-[#242424]">

@@ -121,7 +121,7 @@ export const AlertsScreen: React.FC = () => {
               FLEET ALERTS
             </h1>
             <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#F7C83E] text-[#242424] border border-[#242424]">
-              Live Rule Engine
+              Operational Rules
             </span>
           </div>
           <p className="text-xs text-[#78756E] mt-0.5">

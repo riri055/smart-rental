@@ -229,7 +229,7 @@ export const AiIntelligenceScreen: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold font-mono tracking-tight text-[#242424]">
-              AI INTELLIGENCE &amp; DEMAND FORECASTING
+              AI INTELLIGENCE
             </h1>
             <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#F7C83E] text-[#242424] border border-[#242424]">
               Explainable Rules
@@ -251,11 +251,28 @@ export const AiIntelligenceScreen: React.FC = () => {
         </button>
       </div>
 
+      {/* DATA → INSIGHT → ACTION flow */}
+      <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono font-bold text-[#78756E]">
+        <span className="text-[#605D57] uppercase tracking-wider">Workflow:</span>
+        <span className="px-2 py-1 rounded bg-[#F7F2E6] border border-[#242424]/15 text-[#242424]">
+          Data
+        </span>
+        <span className="text-[#C9C4B6]">→</span>
+        <span className="px-2 py-1 rounded bg-[#F7F2E6] border border-[#242424]/15 text-[#242424]">
+          Insight
+        </span>
+        <span className="text-[#C9C4B6]">→</span>
+        <span className="px-2 py-1 rounded bg-[#F7C83E] text-[#242424] border border-[#242424]">
+          Action
+        </span>
+      </div>
+
       {/* ------------------------------------------------------------------ */}
       {/* Demand forecast */}
       {/* ------------------------------------------------------------------ */}
       <section className="space-y-3">
         <SectionHeading
+          accent="Insight"
           title="Demand Forecast"
           subtitle="Rolling weighted average + linear trend per site and equipment type."
         />
@@ -476,7 +493,8 @@ export const AiIntelligenceScreen: React.FC = () => {
       {/* ------------------------------------------------------------------ */}
       <section className="space-y-3">
         <SectionHeading
-          title="Anomaly Detection"
+          accent="Monitor"
+          title="Operational Anomalies"
           subtitle="Rule-based telemetry flags: excessive idle, high engine temperature, abnormal fuel, unassigned equipment."
         />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -560,6 +578,7 @@ export const AiIntelligenceScreen: React.FC = () => {
       {/* ------------------------------------------------------------------ */}
       <section className="space-y-3">
         <SectionHeading
+          accent="Action"
           title="Asset Recommendations"
           subtitle="Transparent weighted ranking of which existing asset to deploy for a target site and type."
         />
@@ -651,6 +670,7 @@ export const AiIntelligenceScreen: React.FC = () => {
       {/* ------------------------------------------------------------------ */}
       <section className="space-y-3">
         <SectionHeading
+          accent="Impact"
           title="Projected Impact"
           subtitle="Simulated fleet-level effect of rebalancing idle assets — not a commitment."
         />
@@ -714,15 +734,23 @@ export const AiIntelligenceScreen: React.FC = () => {
   );
 };
 
-const SectionHeading: React.FC<{ title: string; subtitle: string }> = ({
-  title,
-  subtitle,
-}) => (
-  <div>
-    <h2 className="text-sm font-bold font-mono tracking-tight text-[#242424]">
-      {title}
-    </h2>
-    <p className="text-xs text-[#78756E]">{subtitle}</p>
+const SectionHeading: React.FC<{
+  title: string;
+  subtitle: string;
+  accent?: string;
+}> = ({ title, subtitle, accent }) => (
+  <div className="flex items-center gap-2.5">
+    {accent && (
+      <span className="shrink-0 text-[10px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#242424] text-[#F7C83E]">
+        {accent}
+      </span>
+    )}
+    <div>
+      <h2 className="text-sm font-bold font-mono tracking-tight text-[#242424]">
+        {title}
+      </h2>
+      <p className="text-xs text-[#78756E]">{subtitle}</p>
+    </div>
   </div>
 );
 
