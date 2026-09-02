@@ -9,6 +9,7 @@ import React, {
 import * as api from '../api/client';
 import type {
   Asset,
+  LatestTelemetryLocation,
   Operator,
   Rental,
   Site,
@@ -21,6 +22,7 @@ export type ScreenType =
   | 'assets'
   | 'asset-details'
   | 'check-in-out'
+  | 'qr-scan'
   | 'usage-logs'
   | 'alerts'
   | 'ai-intelligence';
@@ -94,15 +96,6 @@ interface FleetContextType {
 
 const FleetContext = createContext<FleetContextType | undefined>(undefined);
 
-// Deterministic small offset so assets sharing a site don't stack exactly.
-function jitter(id: string): number {
-  let hash = 0;
-  for (let i = 0; i < id.length; i += 1) {
-    hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
-  }
-  return ((hash % 100) / 100 - 0.5) * 0.004;
-}
-
 export const FleetProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -174,44 +167,39 @@ export const FleetProvider: React.FC<{ children: React.ReactNode }> = ({
         .then((openAlerts) => setOpenAlertsCount(openAlerts.length))
         .catch(() => setOpenAlertsCount(0));
 
-      // Resolve asset positions: site-assigned assets sit at their site (with
-      // a small deterministic jitter); NULL-site assets fall back to their
-      // latest telemetry GPS reading.
+      // Resolve asset positions from their latest real telemetry reading. The
+      // site coordinate is used only as a fallback when telemetry is missing
+      // or the endpoint is unavailable (no jittering or invented coordinates).
+      let latestLocations: LatestTelemetryLocation[] = [];
+      try {
+        latestLocations = await api.getLatestTelemetryLocations();
+      } catch {
+        latestLocations = [];
+      }
+      const locationByAsset = new Map(
+        latestLocations.map((l) => [l.asset_id, l] as const),
+      );
       const pos: Record<string, AssetPosition> = {};
-      const nullSiteAssets: Asset[] = [];
       for (const asset of assetList) {
+        const loc = locationByAsset.get(asset.equipment_id);
+        if (loc) {
+          pos[asset.equipment_id] = {
+            latitude: loc.latitude,
+            longitude: loc.longitude,
+          };
+          continue;
+        }
         const site = asset.current_site_id
           ? siteMap[asset.current_site_id]
           : undefined;
         if (site) {
           pos[asset.equipment_id] = {
-            latitude: site.latitude + jitter(asset.equipment_id),
-            longitude: site.longitude + jitter(`x${asset.equipment_id}`),
+            latitude: site.latitude,
+            longitude: site.longitude,
           };
-        } else {
-          nullSiteAssets.push(asset);
         }
       }
       setPositions(pos);
-
-      if (nullSiteAssets.length > 0) {
-        const settled = await Promise.allSettled(
-          nullSiteAssets.map((a) =>
-            api.getAssetTelemetry(a.equipment_id, { limit: 1 }),
-          ),
-        );
-        const extra: Record<string, AssetPosition> = {};
-        settled.forEach((result, index) => {
-          if (result.status === 'fulfilled' && result.value.length > 0) {
-            const reading = result.value[0];
-            extra[nullSiteAssets[index].equipment_id] = {
-              latitude: reading.latitude,
-              longitude: reading.longitude,
-            };
-          }
-        });
-        setPositions((prev) => ({ ...prev, ...extra }));
-      }
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {

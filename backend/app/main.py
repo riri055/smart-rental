@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from . import models
 from .database import get_db
-from .routers import ai, alerts, assets, operators, rentals, sites, usage
+from .routers import ai, alerts, assets, operators, rentals, sites, telemetry, usage
 
 app = FastAPI(title="Smart Rental Backend", version="0.2.0")
 
@@ -29,6 +29,7 @@ app.include_router(sites.router)
 app.include_router(operators.router)
 app.include_router(rentals.router)
 app.include_router(usage.router)
+app.include_router(telemetry.router)
 app.include_router(alerts.router)
 app.include_router(ai.router)
 

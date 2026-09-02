@@ -8,6 +8,7 @@ import {
   Building2,
   ChevronDown,
   Check,
+  QrCode,
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -53,12 +54,21 @@ export const Header: React.FC = () => {
 
   const currentSiteName =
     selectedSiteFilter === 'all'
-      ? 'All Operations Sites'
+      ? 'All Sites'
       : `${selectedSiteFilter} — ${sites[selectedSiteFilter]?.site_name || 'Site'}`;
 
   return (
     <header className="h-16 bg-[#FFFDF7] border-b border-[#242424]/15 px-6 flex items-center justify-between sticky top-0 z-30 shadow-[0_1px_2px_rgba(36,36,36,0.03)]">
       <div className="flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2 pr-3 border-r border-[#242424]/15">
+          <span className="px-1.5 py-0.5 rounded bg-[#242424] text-[#F7C83E] font-mono font-black text-[10px] leading-none">
+            CAT
+          </span>
+          <span className="font-mono font-extrabold text-sm text-[#242424] tracking-tight">
+            RentalAI
+          </span>
+        </div>
+
         <div className="relative" ref={siteRef}>
           <button
             onClick={() => setSiteDropdownOpen(!siteDropdownOpen)}
@@ -198,6 +208,14 @@ export const Header: React.FC = () => {
 
       <div className="flex items-center gap-3">
         <button
+          onClick={() => navigateTo('qr-scan')}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#242424] hover:bg-[#383838] text-[#FFFDF7] text-xs font-semibold shadow-[2px_2px_0px_rgba(36,36,36,0.2)] transition-all"
+        >
+          <QrCode className="w-3.5 h-3.5 text-[#F7C83E]" />
+          <span>Scan QR</span>
+        </button>
+
+        <button
           onClick={() => navigateTo('check-in-out')}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#242424] hover:bg-[#383838] text-[#FFFDF7] text-xs font-semibold shadow-[2px_2px_0px_rgba(36,36,36,0.2)] transition-all"
         >
@@ -210,7 +228,7 @@ export const Header: React.FC = () => {
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#F7C83E] hover:bg-[#E5B728] text-[#242424] text-xs font-bold border border-[#242424] shadow-[2px_2px_0px_rgba(36,36,36,0.3)] transition-all"
         >
           <Sparkles className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">AI Optimizer</span>
+          <span className="hidden sm:inline">AI Intelligence</span>
         </button>
 
         <button

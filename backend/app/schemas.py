@@ -70,6 +70,13 @@ class AssetDetailOut(AssetOut):
     latest_events: list[EventOut] = Field(default_factory=list)
 
 
+class LatestTelemetryLocationOut(BaseModel):
+    asset_id: str
+    timestamp: date
+    latitude: float
+    longitude: float
+
+
 class UsageOut(BaseModel):
     equipment_id: str
     record_count: int

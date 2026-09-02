@@ -6,6 +6,7 @@ import { FleetTrackerScreen } from './screens/FleetTrackerScreen';
 import { AssetsScreen } from './screens/AssetsScreen';
 import { AssetDetailsScreen } from './screens/AssetDetailsScreen';
 import { CheckInOutScreen } from './screens/CheckInOutScreen';
+import { QrScanScreen } from './screens/QrScanScreen';
 import { UsageLogsScreen } from './screens/UsageLogsScreen';
 import { AlertsScreen } from './screens/AlertsScreen';
 import { AiIntelligenceScreen } from './screens/AiIntelligenceScreen';
@@ -24,6 +25,8 @@ const MainScreenRouter: React.FC = () => {
       return <AssetDetailsScreen />;
     case 'check-in-out':
       return <CheckInOutScreen />;
+    case 'qr-scan':
+      return <QrScanScreen />;
     case 'usage-logs':
       return <UsageLogsScreen />;
     case 'alerts':

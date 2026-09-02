@@ -108,7 +108,7 @@ export const DashboardScreen: React.FC = () => {
             </span>
           </div>
           <p className="text-xs text-[#78756E] mt-1">
-            Live fleet telemetry, asset status distribution, and fleet-wide utilization.
+            Latest available telemetry, asset status distribution, and fleet-wide utilization.
           </p>
         </div>
 
@@ -244,7 +244,7 @@ export const DashboardScreen: React.FC = () => {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h3 className="text-xs font-bold font-mono uppercase tracking-wider text-[#242424]">
-                  Live Fleet Grid
+                  Operational Fleet View
                 </h3>
                 <p className="text-[11px] text-[#78756E]">
                   Asset positions across {Object.keys(sites).length} operational sites
