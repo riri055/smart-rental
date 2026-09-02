@@ -190,6 +190,55 @@ def usage_summary(
     }
 
 
+def latest_telemetry_locations(db: Session) -> list[dict]:
+    """Latest telemetry location per asset, one row per asset.
+
+    The Fleet Tracker uses this to place assets at their most recent real
+    telemetry reading (never site-derived or jittered coordinates). A window
+    function resolves assets that have multiple readings on the same latest
+    day deterministically to the highest telemetry row id.
+    """
+    rn = (
+        func.row_number()
+        .over(
+            partition_by=models.Telemetry.asset_id,
+            order_by=(
+                models.Telemetry.timestamp.desc(),
+                models.Telemetry.id.desc(),
+            ),
+        )
+        .label("rn")
+    )
+    ranked = select(
+        models.Telemetry.asset_id,
+        models.Telemetry.timestamp,
+        models.Telemetry.lat,
+        models.Telemetry.lng,
+        rn,
+    ).subquery()
+
+    rows = db.execute(
+        select(
+            ranked.c.asset_id,
+            ranked.c.timestamp,
+            ranked.c.lat,
+            ranked.c.lng,
+        )
+        .where(ranked.c.rn == 1)
+        .order_by(ranked.c.asset_id)
+    ).all()
+
+    return [
+        {
+            "asset_id": asset_id,
+            "timestamp": timestamp,
+            "latitude": lat,
+            "longitude": lng,
+        }
+        for asset_id, timestamp, lat, lng in rows
+    ]
+
+
 def _next_rental_id(db: Session) -> str:
     last = db.scalar(select(func.max(models.Rental.id)))
     num = (int(last[1:]) + 1) if last else 1

@@ -9,6 +9,7 @@ import type {
   HealthResponse,
   HistoryItem,
   Impact,
+  LatestTelemetryLocation,
   Operator,
   Recommendation,
   Rental,
@@ -107,6 +108,10 @@ export function getAssetTelemetry(
   return request<Telemetry[]>(
     `/api/assets/${encodeURIComponent(equipmentId)}/telemetry${buildQuery(params)}`,
   );
+}
+
+export function getLatestTelemetryLocations(): Promise<LatestTelemetryLocation[]> {
+  return request<LatestTelemetryLocation[]>('/api/telemetry/latest');
 }
 
 export function getAssetUsage(equipmentId: string): Promise<Usage> {

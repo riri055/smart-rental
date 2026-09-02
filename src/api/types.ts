@@ -76,6 +76,13 @@ export interface AssetDetail extends Asset {
   latest_events: EventItem[];
 }
 
+export interface LatestTelemetryLocation {
+  asset_id: string;
+  timestamp: string;
+  latitude: number;
+  longitude: number;
+}
+
 export interface Usage {
   equipment_id: string;
   record_count: number;
