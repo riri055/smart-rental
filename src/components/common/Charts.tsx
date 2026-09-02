@@ -241,10 +241,9 @@ export interface DonutSlice {
 
 export const EnterpriseDonutChart: React.FC<{
   data: DonutSlice[];
-  height?: number;
   centerTitle?: string;
   centerValue?: string | number;
-}> = ({ data, height = 180, centerTitle = 'Total', centerValue }) => {
+}> = ({ data, centerTitle = 'Total', centerValue }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const total = data.reduce((acc, curr) => acc + curr.value, 0) || 1;

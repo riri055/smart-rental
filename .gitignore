@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local hackathon dataset
+data/CAT_dataset.xlsx
+
+# Python backend
+__pycache__/
+*.py[cod]
+.pytest_cache/
+backend/*.db
