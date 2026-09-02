@@ -13,6 +13,8 @@ export const EquipmentIcon: React.FC<EquipmentIconProps> = ({ type, className = 
       return <Construction className={className} size={size} />;
     case 'Bulldozer':
       return <Truck className={className} size={size} />;
+    case 'Dump Truck':
+      return <Truck className={className} size={size} />;
     case 'Crane':
       return <Hammer className={className} size={size} />;
     case 'Grader':

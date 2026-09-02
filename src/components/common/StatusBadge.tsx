@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface StatusBadgeProps {
-  status: 'Available' | 'Rented' | 'Maintenance' | 'Overdue' | string;
+  status: string;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -9,75 +9,36 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
   const sizeClasses = {
     sm: 'text-xs px-2 py-0.5',
     md: 'text-xs px-2.5 py-1 font-medium',
-    lg: 'text-sm px-3 py-1.5 font-medium'
+    lg: 'text-sm px-3 py-1.5 font-medium',
   }[size];
 
-  switch (status) {
-    case 'Available':
-      return (
-        <span className={`inline-flex items-center gap-1.5 rounded border border-[#2E7D32]/30 bg-[#EBF5ED] text-[#2E7D32] ${sizeClasses}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D32]" />
-          Available
-        </span>
-      );
-    case 'Rented':
-      return (
-        <span className={`inline-flex items-center gap-1.5 rounded border border-[#1565C0]/30 bg-[#E3F2FD] text-[#1565C0] ${sizeClasses}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#1565C0]" />
-          Rented / Active
-        </span>
-      );
-    case 'Maintenance':
-      return (
-        <span className={`inline-flex items-center gap-1.5 rounded border border-[#D97706]/30 bg-[#FEF3C7] text-[#D97706] ${sizeClasses}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]" />
-          Maintenance
-        </span>
-      );
-    case 'Overdue':
-      return (
-        <span className={`inline-flex items-center gap-1.5 rounded border border-[#C62828]/40 bg-[#FEE2E2] text-[#C62828] font-semibold ${sizeClasses}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#C62828] animate-pulse" />
-          Overdue
-        </span>
-      );
-    default:
-      return (
-        <span className={`inline-flex items-center gap-1.5 rounded border border-[#242424]/20 bg-[#F7F2E6] text-[#242424] ${sizeClasses}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#78756E]" />
-          {status}
-        </span>
-      );
-  }
-};
+  const palette: Record<string, { bg: string; text: string; dot: string; label: string }> = {
+    Active: { bg: 'bg-[#E3F2FD]', text: 'text-[#1565C0]', dot: 'bg-[#1565C0]', label: 'Active' },
+    Rented: { bg: 'bg-[#E3F2FD]', text: 'text-[#1565C0]', dot: 'bg-[#1565C0]', label: 'Rented / Active' },
+    Available: { bg: 'bg-[#EBF5ED]', text: 'text-[#2E7D32]', dot: 'bg-[#2E7D32]', label: 'Available' },
+    Idle: { bg: 'bg-[#FEF3C7]', text: 'text-[#D97706]', dot: 'bg-[#D97706]', label: 'Idle' },
+    Maintenance: { bg: 'bg-[#FEF3C7]', text: 'text-[#D97706]', dot: 'bg-[#D97706]', label: 'Maintenance' },
+    Overdue: { bg: 'bg-[#FEE2E2]', text: 'text-[#C62828]', dot: 'bg-[#C62828]', label: 'Overdue' },
+    Extended: { bg: 'bg-[#FEF6DC]', text: 'text-[#B45309]', dot: 'bg-[#F7C83E]', label: 'Extended' },
+    Completed: { bg: 'bg-[#EBF5ED]', text: 'text-[#2E7D32]', dot: 'bg-[#2E7D32]', label: 'Completed' },
+    Unknown: { bg: 'bg-[#F7F2E6]', text: 'text-[#55534E]', dot: 'bg-[#78756E]', label: 'Unknown' },
+  };
 
-export const RiskBadge: React.FC<{ risk: 'Low' | 'Medium' | 'High' | 'Critical' | string }> = ({ risk }) => {
-  switch (risk) {
-    case 'Critical':
-      return (
-        <span className="inline-flex items-center gap-1 rounded bg-[#FEE2E2] px-2 py-0.5 text-xs font-semibold text-[#C62828] border border-[#C62828]/40">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#C62828]" />
-          Critical Risk
-        </span>
-      );
-    case 'High':
-      return (
-        <span className="inline-flex items-center gap-1 rounded bg-[#FFF1F2] px-2 py-0.5 text-xs font-medium text-[#BE123C] border border-[#BE123C]/30">
-          High Risk
-        </span>
-      );
-    case 'Medium':
-      return (
-        <span className="inline-flex items-center gap-1 rounded bg-[#FEF3C7] px-2 py-0.5 text-xs font-medium text-[#B45309] border border-[#B45309]/30">
-          Medium
-        </span>
-      );
-    case 'Low':
-    default:
-      return (
-        <span className="inline-flex items-center gap-1 rounded bg-[#F7F2E6] px-2 py-0.5 text-xs font-medium text-[#55534E] border border-[#242424]/15">
-          Low
-        </span>
-      );
-  }
+  const config = palette[status] ?? {
+    bg: 'bg-[#F7F2E6]',
+    text: 'text-[#242424]',
+    dot: 'bg-[#78756E]',
+    label: status,
+  };
+
+  const pulse = status === 'Overdue';
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded border border-[#242424]/15 ${config.bg} ${config.text} ${sizeClasses}`}
+    >
+      <span className={`w-1.5 h-1.5 rounded-full ${config.dot} ${pulse ? 'animate-pulse' : ''}`} />
+      {config.label}
+    </span>
+  );
 };
